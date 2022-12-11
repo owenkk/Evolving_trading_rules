@@ -8,7 +8,7 @@ import numpy as np
 
 from utils.stock_functions import MAFilter
 
-initial_data = pd.read_csv("./data/Training_data.csv",
+initial_data = pd.read_csv("../data/Training_data.csv",
                            names=['volume0', 'price0', 'volume1', 'price1', 'volume2', 'price2', 'volume3', 'price3',
                                   'volume4', 'price4'
                                , 'volume5', 'price5', 'volume6', 'price6', 'volume7', 'price7', 'volume8', 'price8',

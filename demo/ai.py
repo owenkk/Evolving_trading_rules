@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # 读入股票数据
-dataset = pd.read_csv('./data/Training_data.csv')
+dataset = pd.read_csv('../data/Training_data.csv')
 
 # 画图
 plt.plot(dataset['Close'])
