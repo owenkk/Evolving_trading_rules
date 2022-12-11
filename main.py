@@ -34,7 +34,7 @@ sum_hold_stock = MAFilter.initial_buy_stock(stock_num,
 sum_value = []
 
 #
-days = [2, 50]
+days = [2, 500]
 day_list = []
 
 i = days[0]
@@ -82,8 +82,8 @@ while i <= days[1]:
     i += 1
 
     day_sum_value = 0
-    for z in sum_hold_stock:
-        day_sum_value = day_sum_value + z[3]
+    for z in new_sum_hold_stock:
+        day_sum_value = day_sum_value + z[2]
 
         # sum_value.append(z[3])
 
@@ -97,9 +97,10 @@ def draw_picture(record_list, day_list):
     plt.plot(iterations, record_list, 'b-')
 
     plt.title('best values record')
-    plt.xlabel('Cycles')
+    plt.xlabel('Days')
     plt.ylabel('best value')
     plt.show()
 
 # draw picture function
-# draw_picture(sum_value,day_list)
+draw_picture(sum_value,day_list)
+

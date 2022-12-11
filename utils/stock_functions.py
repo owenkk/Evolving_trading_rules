@@ -111,15 +111,16 @@ class MAFilter:
 
     @staticmethod
     def buy_stock(max_rate, stock_price, day, sell_money):
+        buy_money = sell_money * 0.99
         buy_stock_list = []
         buy_stock_name = 'price' + str(max_rate)
         buy_stock_price = stock_price[buy_stock_name][day]
-        buy_stock_volume = sell_money / buy_stock_price
+        buy_stock_volume = buy_money / buy_stock_price
 
         buy_stock_list.append(buy_stock_name)
         buy_stock_list.append(buy_stock_volume)
         buy_stock_list.append(buy_stock_price)
-        buy_stock_list.append(sell_money)
+        buy_stock_list.append(buy_money)
 
         return buy_stock_list
 

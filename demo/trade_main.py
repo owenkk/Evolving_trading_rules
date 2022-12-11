@@ -8,7 +8,7 @@ import numpy as np
 
 from utils.stock_functions import MAFilter
 
-initial_data = pd.read_csv("../data/Training_data.csv",
+initial_data = pd.read_csv("./data/Training_data.csv",
                            names=['volume0', 'price0', 'volume1', 'price1', 'volume2', 'price2', 'volume3', 'price3',
                                   'volume4', 'price4'
                                , 'volume5', 'price5', 'volume6', 'price6', 'volume7', 'price7', 'volume8', 'price8',
@@ -121,12 +121,12 @@ while i <= days[1]:
     i += 1
 
     day_sum_value = 0
-    for z in sum_hold_stock:
-        day_sum_value = day_sum_value + z[3]
+    for z in new_sum_hold_stock:
+        day_sum_value = day_sum_value + z[2]
 
         # sum_value.append(z[3])
 
-    sum_value.append(day_sum_value )
+    sum_value.append(day_sum_value)
     day_list.append(days)
 
 
@@ -143,4 +143,4 @@ def draw_picture(record_list, day_list):
     plt.ylabel('best value')
     plt.show()
 
-# draw_picture(sum_value,day_list)
+draw_picture(sum_value,day_list)
