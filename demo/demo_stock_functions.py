@@ -18,6 +18,7 @@ class MAFilter:
         for i in buy_order[0:stock_num]:
             hold_stock = []
             hold_stock_volume = money / stock_num / stock_price.iloc[0][i]
+            # print(hold_stock_volume)
             hold_stock.append('price' + str(i))
             hold_stock.append(hold_stock_volume)
             hold_stock.append(stock_price.iloc[0][i])
@@ -25,11 +26,13 @@ class MAFilter:
             hold_stock.append(stock_value)
             sum_hold_stock.append(hold_stock)
 
+        # print(sum_hold_stock)
 
         return sum_hold_stock
 
     @staticmethod
     def stock_return_rate(day, stock_price):
+        # day = 0
         day_price = stock_price.iloc[day]
         # print(day_price)
 
@@ -37,10 +40,14 @@ class MAFilter:
         a = 0
         for i in day_price:
             last_day_price = stock_price.iloc[1][a]
+            # print(last_day_price)
+            # print(i)
             a += 1
 
             day_return_price = float(i) - float(last_day_price)
+            # print(day_return_price)
             day_return_rate = day_return_price / float(last_day_price) * 100
+            # print(day_return_rate)
             stock_return_rate.append(day_return_rate)
 
         # print(stock_return_rate)  # [1.5939077304524902, -2.948941021179572, 1.2345679012345678, -0.34393809114359414, 0.18395080866015323, 0.30294074183538205, -1.0520512702715084, -1.0572826258482033, 2.931175483148958, -2.054947509492954]
@@ -67,6 +74,8 @@ class MAFilter:
     @staticmethod
     def return_min_rate_stock(sum_hold_stock, stock_return_rate):
 
+        print(sum_hold_stock)
+        print(stock_return_rate)
         stock_num_list = []
         stock_volume_list = []
         stock_return_rate_list = []
@@ -82,10 +91,13 @@ class MAFilter:
             stock_volume_list.append(stock_volume)
             # stock_return_rate_list.append()
 
+        # stock_min_rate_name = '0'
+        print("stock_num_list: ")
+        print(stock_num_list)
         if stock_return_rate[stock_num_list[0]] >= stock_return_rate[stock_num_list[1]]:
             stock_min_rate_name = stock_num_list[1]
             stock_min_volume = stock_volume_list[1]
-            sum_hold_stock.remove(sum_hold_stock[1])
+            # sum_hold_stock.remove(sum_hold_stock[1])
         else:
             stock_min_rate_name = stock_num_list[0]
             stock_min_volume = stock_volume_list[0]
@@ -96,16 +108,59 @@ class MAFilter:
     @staticmethod
     def sell_stock(sum_hold_stock, stock_return_rate,stock_price,day):
 
+        # stock_return_rate_sorted.reverse()
+        # print('stock_return_rate_sorted:')
+        # print(stock_return_rate_sorted)
+        print('stock_return_rate：11111')
+        print(stock_return_rate)
+
         sell_money = 0
         for a in sum_hold_stock:
             hold_stock_name = int(a[0][-1])
+            print('hold_stock_name')
+            print(hold_stock_name)
             if float(stock_return_rate[hold_stock_name]) < 0:
+                print(77777)
+                print(a)
                 day_stock_price = stock_price.iloc[day][hold_stock_name]
+                print('day_stock_price')
+                print(day_stock_price)
                 day_stock_volume = a[1]
                 sell_money = day_stock_price * day_stock_volume
                 sell_money = a[3]
 
                 sum_hold_stock.remove(a)
+
+
+
+        # hold_stock_num_list = []
+        # for a in sum_hold_stock:
+        #     hold_stock_num_list.append(a[0][-1])
+        # print('hold_stock_num_list')
+        # print(hold_stock_num_list)
+        #
+        # sell_money = 0
+        # for b in stock_return_rate_sorted:
+        #     if str(b) in hold_stock_num_list:
+        #         a = hold_stock_num_list.index(str(b))
+        #         print('a')
+        #         print(a)
+        #         hold_stock = sum_hold_stock[a]
+        #         day_stock_volume = hold_stock[1]
+        #         print('day_stock_volume')
+        #         print(day_stock_volume)
+        #         day_stock_price = hold_stock[2]
+        #         print('day:')
+        #         print(day)
+        #         print('day_stock_price')
+        #         print(day_stock_price)
+        #         sell_money = day_stock_price * day_stock_volume
+
+
+                # break
+
+        # print('sell_money')
+        # print(sell_money)
 
         return sell_money
 
