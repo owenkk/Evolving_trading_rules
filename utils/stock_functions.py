@@ -57,7 +57,7 @@ class MAFilter:
         # print(c)
 
         left_list = []
-        right_list = [0]
+        right_list = []
         for i in c:
             # print(i)
 
@@ -66,12 +66,10 @@ class MAFilter:
             else:
                 right_list.insert(0, i)
 
-
         stock_return_rate_sorted = left_list + right_list
         # print(stock_return_rate_sorted)
 
         return stock_return_rate, stock_return_rate_sorted
-
 
     @staticmethod
     def return_min_rate_stock(sum_hold_stock, stock_return_rate):
@@ -93,8 +91,6 @@ class MAFilter:
             stock_volume_list.append(stock_volume)
             # stock_return_rate_list.append()
 
-
-
         # stock_min_rate_name = '0'
         print("stock_num_list: ")
         print(stock_num_list)
@@ -109,26 +105,62 @@ class MAFilter:
 
         return sum_hold_stock, stock_min_rate_name, stock_min_volume
 
-
     @staticmethod
-    def sell_stock(sum_hold_stock, stock_price, day, stock_min_rate_name,stock_return_rate_sorted):
+    def sell_stock(sum_hold_stock, stock_return_rate,stock_price,day):
 
-        stock_return_rate_sorted.reverse()
-        print('stock_return_rate_sorted:')
-        print(stock_return_rate_sorted)
+        # stock_return_rate_sorted.reverse()
+        # print('stock_return_rate_sorted:')
+        # print(stock_return_rate_sorted)
+        print('stock_return_rate：11111')
+        print(stock_return_rate)
+
         sell_money = 0
-        for i in stock_return_rate_sorted:
-            for a in sum_hold_stock:
-                stock_name = a[0][-1]
-                if i == stock_name:
-                    day_stock_volume = a[1]
-                    print('day_stock_volume')
-                    print(day_stock_volume)
-                    day_stock_price = stock_price.iloc[day][stock_min_rate_name]
-                    print('day_stock_price')
-                    print(day_stock_price)
-                    sell_money = day_stock_price * day_stock_volume
-                    break
+        for a in sum_hold_stock:
+            hold_stock_name = int(a[0][-1])
+            print('hold_stock_name')
+            print(hold_stock_name)
+            if float(stock_return_rate[hold_stock_name]) < 0:
+                print(77777)
+                print(a)
+                day_stock_price = stock_price.iloc[day][hold_stock_name]
+                print('day_stock_price')
+                print(day_stock_price)
+                day_stock_volume = a[1]
+                sell_money = day_stock_price * day_stock_volume
+                sell_money = a[3]
+
+                sum_hold_stock.remove(a)
+
+
+
+        # hold_stock_num_list = []
+        # for a in sum_hold_stock:
+        #     hold_stock_num_list.append(a[0][-1])
+        # print('hold_stock_num_list')
+        # print(hold_stock_num_list)
+        #
+        # sell_money = 0
+        # for b in stock_return_rate_sorted:
+        #     if str(b) in hold_stock_num_list:
+        #         a = hold_stock_num_list.index(str(b))
+        #         print('a')
+        #         print(a)
+        #         hold_stock = sum_hold_stock[a]
+        #         day_stock_volume = hold_stock[1]
+        #         print('day_stock_volume')
+        #         print(day_stock_volume)
+        #         day_stock_price = hold_stock[2]
+        #         print('day:')
+        #         print(day)
+        #         print('day_stock_price')
+        #         print(day_stock_price)
+        #         sell_money = day_stock_price * day_stock_volume
+
+
+                # break
+
+        # print('sell_money')
+        # print(sell_money)
 
         return sell_money
 
@@ -136,7 +168,7 @@ class MAFilter:
     def buy_stock(max_rate, stock_price, day, sell_money):
         buy_stock_list = []
         buy_stock_name = 'price' + str(max_rate)
-        buy_stock_price = stock_price.iloc[1][day]
+        buy_stock_price = stock_price[buy_stock_name][day]
         buy_stock_volume = sell_money / buy_stock_price
 
         buy_stock_list.append(buy_stock_name)
@@ -147,8 +179,8 @@ class MAFilter:
         return buy_stock_list
 
     @staticmethod
-    def trading_commissions(money, fee):
-        fee = 0.99
+    def trading_commissions(money, fee=0.99):
+        # fee = 0.99
         got_money = money * fee
 
         return got_money
